@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Top Tourist Places Finder</title>
+    <style>
+        body { font-family: Arial; background: #f2f2f2; text-align: center; padding-top: 40px; }
+        input { padding: 10px; width: 250px; font-size: 16px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        ul { list-style: none; padding: 0; margin-top: 20px; }
+        li { background: white; margin: 8px auto; padding: 10px; width: 380px; border-radius: 5px; }
+        a { text-decoration: none; color: #333; }
+        a:hover { color: blue; }
+    </style>
+</head>
+<body>
+<h1>Top Tourist Places Finder</h1>
+<input type="text" id="countryInput" placeholder="Enter country name">
+<button onclick="findPlaces()">Search</button>
+<ul id="result"></ul>
+
+<script>
+async function findPlaces() {
+    const country = document.getElementById("countryInput").value.trim();
+    const result = document.getElementById("result");
+    result.innerHTML = "<li>Loading...</li>";
+
+    if (!country) {
+        result.innerHTML = "<li>Please enter a country name</li>";
+        return;
+    }
+
+    try {
+        // Step 1: Build the category: "Tourist attractions in <Country>"
+        const category = `Category:Tourist attractions in ${country}`;
+        const url = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=${encodeURIComponent(category)}&cmlimit=5&format=json&origin=*`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+        result.innerHTML = "";
+
+        if (!data.query || !data.query.categorymembers || data.query.categorymembers.length === 0) {
+            result.innerHTML = "<li>No tourist places found for this country.</li>";
+            return;
+        }
+
+        // Display first 5 attractions
+        data.query.categorymembers.forEach(member => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = `https://en.wikipedia.org/wiki/${encodeURIComponent(member.title.replace(/ /g, "_"))}`;
+            a.target = "_blank";
+            a.textContent = member.title;
+            li.appendChild(a);
+            result.appendChild(li);
+        });
+
+    } catch (error) {
+        console.error(error);
+        result.innerHTML = "<li>Error fetching data</li>";
+    }
+}
+</script>
+</body>
+</html>
