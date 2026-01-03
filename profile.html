@@ -1,66 +1,307 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>User Registration Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin: 30px 0 10px 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 0.6s ease;
+        }
+        hr {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            border: none;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease;
+        }
+        .edit-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-bottom: 20px;
+        }
+        .edit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        .edit-button:active {
+            transform: translateY(0);
+        }
+        .photo-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .photo-section label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 15px auto;
+            padding: 10px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        input[type="file"]:hover:not(:disabled) {
+            border-color: #764ba2;
+            background: #f8f9fa;
+        }
+        input[type="file"]:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #ccc;
+        }
+        #preview {
+            display: block;
+            margin: 20px auto;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+        #preview:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background-color: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+        input[type="text"]:hover:not([readonly]),
+        input[type="number"]:hover:not([readonly]),
+        input[type="email"]:hover:not([readonly]),
+        input[type="tel"]:hover:not([readonly]) {
+            border-color: #b0b0b0;
+        }
+        input[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+            color: #6c757d;
+        }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        input[type="submit"],
+        input[type="reset"] {
+            flex: 1;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        input[type="submit"] {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        input[type="submit"]:active {
+            transform: translateY(0);
+        }
+        input[type="reset"] {
+            background-color: #e9ecef;
+            color: #495057;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="reset"]:hover {
+            background-color: #dee2e6;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 600px) {
+            form {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            input[type="submit"],
+            input[type="reset"] {
+                width: 100%;
+            }
+            #preview {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-	<h1 style="text-align:center">Profile</h1>
-	<hr>
+    <h1>Profile</h1>
+    <hr>
     <form>
-		<button type="button" onclick = "enableEdit()">Edit</button><br><br>
-		
-        <label>Photograph:</label><br>
-        <input type="file" class="edit" name="photo" accept="image/*" disabled onchange="previewPhoto(event)"><br><br>
-		
-		<img id="preview" src="https://img.freepik.com/premium-vector/avatar-profil-picture-icon-vector-design-template_393879-5783.jpg?semt=ais_hybrid&w=740&q=80" width="150" height="150" style=" border:1px solid #000;"><br><br>
-
-		
-        <label>User Name:</label><br>
-        <input type="text" class = "edit" name="uid" required readonly><br><br>
-
-        <label>First Name:</label><br>
-        <input type="text" class = "edit" name="fname" required readonly><br><br>
-
-        <label>Last Name:</label><br>
-        <input type="text" class = "edit" name="lname" required readonly><br><br>
-
-        <label>Age:</label><br>
-        <input type="number" class = "edit" name="age" min="19" required readonly ><br><br>
-
-        <label>Email:</label><br>
-        <input type="email" class = "edit" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
-		title="Enter a valid email address" required readonly><br><br>
-
-        <label>Phone No:</label><br>
-        <input type="tel" class = "edit" name="phone" pattern="[0-9]{10}"
-		title="Enter a valid phone number" required readonly><br><br>
-
-        <label>City:</label><br>
-        <input type="text" class = "edit" name="city" readonly><br><br>
-
-        <label>Country:</label><br>
-        <input type="text" class = "edit" name="country" readonly><br><br>
-		
-        <input type="submit" value="Submit">
-        <input type="reset" value="Reset">
+        <button type="button" class="edit-button" onclick="enableEdit()">✏️ Edit Profile</button>
+        
+        <div class="photo-section">
+            <label>Photograph:</label>
+            <input type="file" class="edit" name="photo" accept="image/*" disabled onchange="previewPhoto(event)">
+            <img id="preview" src="https://img.freepik.com/premium-vector/avatar-profil-picture-icon-vector-design-template_393879-5783.jpg?semt=ais_hybrid&w=740&q=80" width="150" height="150" alt="Profile Photo">
+        </div>
+        
+        <div class="form-group">
+            <label>User Name:</label>
+            <input type="text" class="edit" name="uid" required readonly placeholder="Enter username">
+        </div>
+        
+        <div class="form-group">
+            <label>First Name:</label>
+            <input type="text" class="edit" name="fname" required readonly placeholder="Enter first name">
+        </div>
+        
+        <div class="form-group">
+            <label>Last Name:</label>
+            <input type="text" class="edit" name="lname" required readonly placeholder="Enter last name">
+        </div>
+        
+        <div class="form-group">
+            <label>Age:</label>
+            <input type="number" class="edit" name="age" min="19" required readonly placeholder="Enter age (min 19)">
+        </div>
+        
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" class="edit" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
+            title="Enter a valid email address" required readonly placeholder="example@email.com">
+        </div>
+        
+        <div class="form-group">
+            <label>Phone No:</label>
+            <input type="tel" class="edit" name="phone" pattern="[0-9]{10}"
+            title="Enter a valid phone number" required readonly placeholder="10-digit phone number">
+        </div>
+        
+        <div class="form-group">
+            <label>City:</label>
+            <input type="text" class="edit" name="city" readonly placeholder="Enter city">
+        </div>
+        
+        <div class="form-group">
+            <label>Country:</label>
+            <input type="text" class="edit" name="country" readonly placeholder="Enter country">
+        </div>
+        
+        <div class="button-group">
+            <input type="submit" value="💾 Save Changes">
+            <input type="reset" value="↺ Reset">
+        </div>
     </form>
-	<script>
-		function enableEdit(){
-			let fields = document.getElementsByClassName("edit");
-			for (let i=0;i<fields.length;i++){
-				fields[i].readOnly = false;
-				fields[i].disabled = false;
-			}
-		}
-		
-		function previewPhoto(event) {
-			const img = document.getElementById("preview");
-			img.src = URL.createObjectURL(event.target.files[0]);
-			img.style.display = "block";
-		}
-	</script>
+    
+    <script>
+        function enableEdit(){
+            let fields = document.getElementsByClassName("edit");
+            for (let i=0; i<fields.length; i++){
+                fields[i].readOnly = false;
+                fields[i].disabled = false;
+            }
+        }
+        
+        function previewPhoto(event) {
+            const img = document.getElementById("preview");
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.style.display = "block";
+        }
+    </script>
 </body>
-
 </html>
