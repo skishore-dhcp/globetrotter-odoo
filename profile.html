@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Registration Form</title>
+</head>
+
+<body>
+	<h1 style="text-align:center">Profile</h1>
+	<hr>
+    <form>
+		<button type="button" onclick = "enableEdit()">Edit</button><br><br>
+		
+        <label>Photograph:</label><br>
+        <input type="file" class="edit" name="photo" accept="image/*" disabled onchange="previewPhoto(event)"><br><br>
+		
+		<img id="preview" src="https://img.freepik.com/premium-vector/avatar-profil-picture-icon-vector-design-template_393879-5783.jpg?semt=ais_hybrid&w=740&q=80" width="150" height="150" style=" border:1px solid #000;"><br><br>
+
+		
+        <label>User Name:</label><br>
+        <input type="text" class = "edit" name="uid" required readonly><br><br>
+
+        <label>First Name:</label><br>
+        <input type="text" class = "edit" name="fname" required readonly><br><br>
+
+        <label>Last Name:</label><br>
+        <input type="text" class = "edit" name="lname" required readonly><br><br>
+
+        <label>Age:</label><br>
+        <input type="number" class = "edit" name="age" min="19" required readonly ><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" class = "edit" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
+		title="Enter a valid email address" required readonly><br><br>
+
+        <label>Phone No:</label><br>
+        <input type="tel" class = "edit" name="phone" pattern="[0-9]{10}"
+		title="Enter a valid phone number" required readonly><br><br>
+
+        <label>City:</label><br>
+        <input type="text" class = "edit" name="city" readonly><br><br>
+
+        <label>Country:</label><br>
+        <input type="text" class = "edit" name="country" readonly><br><br>
+		
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+	<script>
+		function enableEdit(){
+			let fields = document.getElementsByClassName("edit");
+			for (let i=0;i<fields.length;i++){
+				fields[i].readOnly = false;
+				fields[i].disabled = false;
+			}
+		}
+		
+		function previewPhoto(event) {
+			const img = document.getElementById("preview");
+			img.src = URL.createObjectURL(event.target.files[0]);
+			img.style.display = "block";
+		}
+	</script>
+</body>
+
+</html>
