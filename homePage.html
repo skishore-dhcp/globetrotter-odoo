@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: white;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 20px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .page-info {
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: #333;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .user-badge {
+            background-color: #10b981;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .search-section {
+            background-color: #ffffff;
+            padding: 30px 50px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 30px;
+            font-size: 1.1em;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: none;
+            background: #e5e7eb;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #666;
+            transition: background-color 0.3s;
+        }
+
+        .clear-btn:hover {
+            background-color: #d1d5db;
+        }
+
+        .content {
+            padding: 40px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .banner-section {
+            margin-bottom: 40px;
+        }
+
+        .Banner {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide_active {
+            opacity: 1;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 30px;
+            color: white;
+        }
+
+        .banner-text {
+            font-size: 2em;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: 2px solid #e5e7eb;
+            border-radius: 30px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #f3f4f6;
+            border-color: #6366f1;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            height: 180px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #4b5563;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card.active {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .trip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .trip-card {
+            height: 220px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #4b5563;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .trip-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .trip-card.active {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+        }
+
+        .plan-trip-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .plan-trip-btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3);
+        }
+
+        .plan-trip-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .plus-icon {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .search-section {
+                padding: 20px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .Banner {
+                height: 250px;
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .trip-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                height: 120px;
+            }
+
+            .trip-card {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Travel Planner</h1>
+            <div class="header-right">
+                <div class="page-info">Home</div>
+                <div class="user-badge">Online</div>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search destinations...">
+                <button class="clear-btn" id="clearBtn">×</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="banner-section">
+                <div class="Banner">
+                    <img src="https://img.freepik.com/free-psd/travel-tourism-facebook-cover-banner-template_120329-5869.jpg?semt=ais_hybrid&w=740&q=80" class="slide slide_active" alt="Travel Banner 1">
+                    <img src="https://img.freepik.com/free-psd/travel-tourism-facebook-cover-banner-template_120329-5850.jpg?semt=ais_hybrid&w=740&q=80" class="slide" alt="Travel Banner 2">
+                    <img src="https://img.freepik.com/free-psd/travel-tourism-facebook-cover-banner-template_120329-5857.jpg?semt=ais_hybrid&w=740&q=80" class="slide" alt="Travel Banner 3">
+                    <div class="banner-overlay">
+                        <div class="banner-text">Featured Destinations</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" id="groupBtn">Group by</button>
+                <button class="btn" id="filterBtn">Filter</button>
+                <button class="btn" id="sortBtn">Sort by...</button>
+            </div>
+
+            <div class="section-title">Top Regional Selections</div>
+            <div class="card-grid">
+                <div class="card" data-region="1">Hills</div>
+                <div class="card" data-region="2">Beach</div>
+                <div class="card" data-region="3">City</div>
+                <div class="card" data-region="4">Island</div>
+                <div class="card" data-region="5">Hot Desert</div>
+            </div>
+
+            <div class="section-title">Previous Trips</div>
+            <div class="trip-grid">
+                <div class="trip-card" data-trip="1">Plane</div>
+                <div class="trip-card" data-trip="2">Vehicle</div>
+                <div class="trip-card" data-trip="3">Ship</div>
+            </div>
+
+            <div class="plan-trip-section">
+                <button class="plan-trip-btn" id="planTripBtn">
+                    <span class="plus-icon">+</span> Plan a trip
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-slideshow for banner
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showNextSlide() {
+            slides[currentSlide].classList.remove('slide_active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('slide_active');
+        }
+        
+        setInterval(showNextSlide, 3000);
+
+        // Clear search input
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.getElementById('searchInput').value = '';
+        });
+
+        // Region card interactions
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                const region = this.dataset.region;
+                console.log('Selected region:', region);
+            });
+        });
+
+        // Trip card interactions
+        document.querySelectorAll('.trip-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.trip-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                const trip = this.dataset.trip;
+                console.log('Selected trip:', trip);
+            });
+        });
+
+        // Action buttons
+        document.getElementById('groupBtn').addEventListener('click', function() {
+            alert('Group by options: Date, Location, Type');
+        });
+
+        document.getElementById('filterBtn').addEventListener('click', function() {
+            alert('Filter options: Price, Duration, Activities');
+        });
+
+        document.getElementById('sortBtn').addEventListener('click', function() {
+            alert('Sort by: Newest, Popular, Rating');
+        });
+
+        // Plan trip button
+        document.getElementById('planTripBtn').addEventListener('click', function() {
+            alert('Opening trip planner...');
+        });
+    </script>
+</body>
+</html>
