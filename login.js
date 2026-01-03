@@ -1,13 +1,11 @@
-// STEP 5: Connect Supabase
 const supabaseUrl = "https://bspusiewpgusseviegpl.supabase.co";
 const supabaseKey = "sb_publishable_dSW3ZDoFoo0NYDlzULF-_Q_BKBte7W2";
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
   supabaseUrl,
   supabaseKey
 );
 
-// STEP 7: Login function
 async function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
@@ -17,10 +15,9 @@ async function login() {
     return;
   }
 
-  // convert username to fake email
   const email = `${username}@app.local`;
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabaseClient.auth.signInWithPassword({
     email,
     password,
   });
@@ -31,3 +28,4 @@ async function login() {
     window.location.href = "dashboard.html";
   }
 }
+
